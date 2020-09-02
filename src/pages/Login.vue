@@ -31,6 +31,10 @@ export default {
       console.log('login')
       await this.$http.post('/login', qs.stringify({ 'username': this.username, 'password': md5(this.password) })).then(res => {
         console.log(res)
+        this.$router.push({
+          path: './ledger',
+          replace: true
+        })
       }).catch(error => {
         console.log(error.message)
       })

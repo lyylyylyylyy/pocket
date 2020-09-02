@@ -6,6 +6,13 @@ import router from './router'
 
 import axios from 'axios'
 
+import {
+  /* eslint-disable no-unused-vars */
+  Popup
+} from 'cube-ui'
+
+Vue.use(Popup)
+
 Vue.config.productionTip = false
 Vue.prototype.$http = axios.create({
   // baseURL: process.env.VUE_APP_API_URL || '/web/api'

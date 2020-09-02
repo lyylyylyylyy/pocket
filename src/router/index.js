@@ -1,7 +1,10 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Register from '@/components/Register'
-import Login from '../components/Login'
+import Register from '@/pages/Register'
+import Login from '../pages/Login'
+import Account from '../pages/Account'
+import Ledger from '../pages/Ledger'
+import Profile from '../pages/Profile'
 
 Vue.use(Router)
 
@@ -20,6 +23,21 @@ export default new Router({
       path: '/login',
       name: 'Login',
       component: Login
+    },
+    {
+      path: '/account',
+      name: 'Account',
+      component: Account
+    },
+    {
+      path: '/ledger',
+      name: 'Ledger',
+      component: Ledger
+    },
+    {
+      path: '/profile',
+      name: 'Profile',
+      component: Profile
     }
   ]
 })
