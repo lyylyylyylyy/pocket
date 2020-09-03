@@ -3,6 +3,7 @@ var express = require('express')
 var router = express.Router()
 const md5 = require('blueimp-md5')
 var UserModel = require('../db/model').UserModel
+var DetailModel = require('../db/model').DetailModel
 
 // 主页
 router.post('/', function (req, res, next) {
@@ -72,4 +73,13 @@ router.post('/login', function (req, res, next) {
   })
 })
 
+router.post('/detail', function (req, res, next) {
+  const {time, tag, category, money, remark} = req.body
+  const newDetail = {time, tag, category, money, remark}
+  DetailModel.create(newDetail).then(res => {
+    res.send(res)
+  }).catch(error => {
+    res.send(error.message)
+  })
+})
 module.exports = router

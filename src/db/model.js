@@ -37,3 +37,22 @@ const userSchema = mongoose.Schema({
 const UserModel = mongoose.model('user', userSchema)
 
 exports.UserModel = UserModel
+
+const detailSchema = mongoose.Schema({
+  time: {type: String, required: true},
+  tag: {type: String, required: true},
+  category: {type: String, required: true},
+  money: {type: String, required: true},
+  remark: {type: String, required: true},
+  author: {
+    id: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'user'
+    },
+    username: String
+  }
+})
+
+const DetailModel = mongoose.model('detail', detailSchema)
+
+exports.DetailModel = DetailModel

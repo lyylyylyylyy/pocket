@@ -8,10 +8,14 @@ import axios from 'axios'
 
 import {
   /* eslint-disable no-unused-vars */
-  Popup
+  Popup,
+  Button,
+  DatePicker
 } from 'cube-ui'
 
 Vue.use(Popup)
+Vue.use(Button)
+Vue.use(DatePicker)
 
 Vue.config.productionTip = false
 Vue.prototype.$http = axios.create({
