@@ -185,7 +185,7 @@ export default {
     showUpdatePropsPicker () {
       if (!this.updatePropsPicker) {
         this.updatePropsPicker = this.$createDatePicker({
-          title: 'Use $updateProps',
+          title: '',
           min: new Date(2008, 7, 8),
           max: new Date(2020, 9, 20),
           value: new Date(),
@@ -197,7 +197,7 @@ export default {
       this.updatePropsPicker.show()
       setTimeout(() => {
         this.updatePropsPicker.$updateProps({
-          title: 'updated',
+          title: '',
           value: new Date(2010, 9, 1)
         })
       }, 1000)
@@ -209,7 +209,7 @@ export default {
       console.log('ppp')
     },
     submit () {
-      this.$http.post('./detail', qs.stringify({
+      this.$http.post('/detail', qs.stringify({
         time: this.time,
         tag: this.tag,
         category: this.type,

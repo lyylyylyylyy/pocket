@@ -13,7 +13,7 @@
 // 连接数据库
 const mongoose = require('mongoose')
 
-mongoose.connect('mongodb+srv://lyy:lyy@yelpcamp-itfym.mongodb.net/pocket?retryWrites=true&w=majority', { useNewUrlParser: true }, (err, res) => {
+mongoose.connect('mongodb+srv://lyy:xxx@yelpcamp-itfym.mongodb.net/pocket?retryWrites=true&w=majority', { useNewUrlParser: true }, (err, res) => {
   if (!err) {
     console.log(res)
   }
@@ -44,13 +44,7 @@ const detailSchema = mongoose.Schema({
   category: {type: String, required: true},
   money: {type: String, required: true},
   remark: {type: String, required: true},
-  author: {
-    id: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'user'
-    },
-    username: String
-  }
+  userId: {type: String, required: true}
 })
 
 const DetailModel = mongoose.model('detail', detailSchema)

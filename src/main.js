@@ -21,7 +21,8 @@ Vue.config.productionTip = false
 Vue.prototype.$http = axios.create({
   // baseURL: process.env.VUE_APP_API_URL || '/web/api'
   baseURL: 'http://localhost:3000',
-  timeout: 30000
+  timeout: 30000,
+  withCredentials: true
 })
 
 /* eslint-disable no-new */

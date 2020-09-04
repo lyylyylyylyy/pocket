@@ -10,6 +10,8 @@
  // var mongoose = require('mongoose');
  // 加载body-parser，用来处理post提交过来的数据
  var bodyParser = require('body-parser');
+
+ var cookieParser = require('cookie-parser');  
  // 创建app应用，NodeJSHttp.createserver()
  var app = express();
  
@@ -19,7 +21,7 @@
  // 设置静态文件托管
  // 当用户访问的url以/public开始，那么直接返回__dirname + '/public'下的文件
  app.use('/public', express.static(__dirname + '/public'));
- 
+ app.use(cookieParser()); 
  // 配置应用模板
  // 定义当前应用所使用的模板引擎
  // 第一个参数：模板引擎的名称，同时也是模板引擎文件的后缀，第二个参数表示用于解析处理模板内容的方法
@@ -33,7 +35,13 @@
  
  // bodyparser设置
  app.use( bodyParser.urlencoded({extended: true}) );
- app.use(require('cors')())
+ // 设置允许跨域请求
+ app.use(function(req, res, next) {  
+    res.header('Access-Control-Allow-Origin', req.headers.origin);
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    res.header('Access-Control-Allow-Credentials', true)
+    next();
+});  
  /**
   * 根据不同的功能划分模块
   */

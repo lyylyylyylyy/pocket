@@ -73,13 +73,42 @@ router.post('/login', function (req, res, next) {
   })
 })
 
+/**
+ * 添加记录明细
+ */
 router.post('/detail', function (req, res, next) {
   const {time, tag, category, money, remark} = req.body
-  const newDetail = {time, tag, category, money, remark}
+  const userId = req.cookies.userid
+  if (!userId) {
+    return res.send({code: 1, msg: '请先登陆'})
+  }
+  const newDetail = {time, tag, category, money, remark, userId}
   DetailModel.create(newDetail).then(res => {
     res.send(res)
   }).catch(error => {
     res.send(error.message)
   })
 })
+
+/**
+ * 获取明细列表
+ */
+router.get('/detail-list', function (req, res, next) {
+  const user = req.cookies.userid
+  if (!user) {
+    return res.send({code: 1, msg: '请先登陆'})
+  }
+  DetailModel.find({userId: user}, function (error, detail) {
+    if (error) {
+      res.send(error.message)
+    } else {
+      if (detail) {
+        res.send({code: 0, data: detail})
+      } else {
+        res.send({data: 'the list is null'})
+      }
+    }
+  })
+})
+
 module.exports = router
