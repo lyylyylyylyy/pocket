@@ -103,7 +103,33 @@ router.get('/detail-list', function (req, res, next) {
       res.send(error.message)
     } else {
       if (detail) {
-        res.send({code: 0, data: detail})
+        const detailList = new Map()
+
+        detail.forEach(element => {
+          const date = new Date((parseInt(element.time))).toLocaleDateString()
+          // console.log(date)
+          const detailtag = {
+            time: element.time,
+            tag: element.tag,
+            category: element.category,
+            money: element.money,
+            remark: element.remark
+          }
+          // console.log(detailtag)
+          if (!detailList.has(date)) {
+            const arr = []
+            arr.push(detailtag)
+            detailList.set(date, arr)
+            // console.log(detailList)
+          } else {
+            const record = detailList.get(date)
+            record.push(detailtag)
+            detailList.set(date, record)
+            // console.log(detailList)
+          }
+        })
+        console.log(detailList)
+        res.send({data: JSON.stringify([...detailList])})
       } else {
         res.send({data: 'the list is null'})
       }

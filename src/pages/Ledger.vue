@@ -142,6 +142,7 @@ export default {
     },
     getDetail () {
       this.$http.get('/detail-list').then(res => {
+        console.log(res.data)
         this.datailList = res.data
       }).catch(error => {
         console.log(error.message)

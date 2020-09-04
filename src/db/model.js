@@ -13,7 +13,7 @@
 // 连接数据库
 const mongoose = require('mongoose')
 
-mongoose.connect('mongodb+srv://lyy:xxx@yelpcamp-itfym.mongodb.net/pocket?retryWrites=true&w=majority', { useNewUrlParser: true }, (err, res) => {
+mongoose.connect('mongodb+srv://lyy:lyy@yelpcamp-itfym.mongodb.net/pocket?retryWrites=true&w=majority', { useNewUrlParser: true }, (err, res) => {
   if (!err) {
     console.log(res)
   }
