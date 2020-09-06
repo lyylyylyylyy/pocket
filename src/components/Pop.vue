@@ -186,8 +186,8 @@ export default {
       if (!this.updatePropsPicker) {
         this.updatePropsPicker = this.$createDatePicker({
           title: '',
-          min: new Date(2008, 7, 8),
-          max: new Date(2020, 9, 20),
+          min: new Date(2019, 1, 1),
+          max: new Date(2020, 12, 31),
           value: new Date(),
           onSelect: this.selectHandle,
           onCancel: this.cancelHandle
@@ -198,7 +198,7 @@ export default {
       setTimeout(() => {
         this.updatePropsPicker.$updateProps({
           title: '',
-          value: new Date(2010, 9, 1)
+          value: new Date(2020, 1, 1)
         })
       }, 1000)
     },
@@ -218,6 +218,7 @@ export default {
       })).then(res => {
         console.log(res)
         this.hide('myPopup')
+        location.reload()
       }).catch(error => {
         console.log(error.message)
       })

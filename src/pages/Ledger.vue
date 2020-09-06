@@ -1,7 +1,17 @@
 <template>
-    <div>
+    <div class="ledger-page">
       <div class="detail-list">
-        <div></div>
+        <div v-for="(item, idx) in detailList" :key="idx" class="day-list">
+          <div class="day-bar">
+            <div class="day-text">{{item[0]}}</div>
+            <div class="day-money">收入：{{moneyList[idx][2]}} 支出：{{moneyList[idx][1]}}</div>
+          </div>
+          <div v-for="(detail, index) in item[1]" :key="index" class="day-detail">
+            <img :src="tagList[detail.tag]" class="tag-img"/>
+            <div class="tag-text">{{detail.tag}}</div>
+            <div class="money-text">{{detail.money}}</div>
+          </div>
+        </div>
       </div>
       <div class="add-detail">
           <button @click="addPay()">添加支出</button>
@@ -122,13 +132,42 @@ export default {
           desc: '奖金'
         }
       ],
+      tagList: {
+        '买菜': require('../assets/vegetable_activate.png'),
+        '孩子': require('../assets/child_activate.png'),
+        '吃喝': require('../assets/eat_activate.png'),
+        '宠物': require('../assets/pet_activate.png'),
+        '租房': require('../assets/rent_activate.png'),
+        '服饰': require('../assets/clothes_activate.png'),
+        '公益': require('../assets/charity_activate.png'),
+        '化妆品': require('../assets/makeup_activate.png'),
+        '话费': require('../assets/phone_activate.png'),
+        '交通': require('../assets/traffic_activate.png'),
+        '学习': require('../assets/study_activate.png'),
+        '医疗': require('../assets/medical_activate.png'),
+        '娱乐': require('../assets/joy_activate.png'),
+        '日用品': require('../assets/necessary_activate.png'),
+        '报销': require('../assets/writeoff_activate.png'),
+        '工资': require('../assets/salary_activate.png'),
+        '红包': require('../assets/red_activate.png'),
+        '投资': require('../assets/invest_activate.png'),
+        '兼职': require('../assets/parttime_activate.png'),
+        '奖金': require('../assets/bonus_activate.png')
+      },
       category: '',
-      datailList: {}
+      detailList: [],
+      moneyList: [],
+      updated: false
     }
   },
-  mounted () {
+  async created () {
     this.getDetail()
   },
+  // watch: {
+  //   detailList (detailList) {
+  //     this.detailList = detailList
+  //   }
+  // },
   methods: {
     addPay () {
       this.category = '1'
@@ -140,10 +179,28 @@ export default {
       console.log(this.category)
       this.$refs.Pop.showPopup('myPopup')
     },
-    getDetail () {
-      this.$http.get('/detail-list').then(res => {
-        console.log(res.data)
-        this.datailList = res.data
+    async getDetail () {
+      await this.$http.get('/detail-list').then(res => {
+        this.detailList = res.data.data
+        // console.log(this.detailList)
+        const list = this.detailList
+        for (let i = 0; i < list.length; i++) {
+          var record = []
+          var pay = 0
+          var income = 0
+          record.push(list[i][0])
+          for (let j = 0; j < list[i][1].length; j++) {
+            if (list[i][1][j].category === '1') {
+              pay = pay + parseInt(list[i][1][j].money)
+            } else {
+              income = income + parseInt(list[i][1][j].money)
+            }
+          }
+          record.push(pay)
+          record.push(income)
+          this.moneyList.push(record)
+        }
+        // console.log(this.moneyList)
       }).catch(error => {
         console.log(error.message)
       })
@@ -151,3 +208,47 @@ export default {
   }
 }
 </script>
+<style lang="scss" scoped>
+.ledger-page {
+  .detail-list {
+    max-height: 460px;
+    overflow-y: scroll;
+    .day-list {
+      .day-bar {
+        display: flex;
+        border-bottom: 1px solid rgba(231, 231, 231, 0.993);
+        .day-text {
+          min-width: 33%;
+          max-width: 33%;
+        }
+        .day-money {
+          min-width: 66%;
+          max-width: 66%;
+          text-align: right;
+        }
+      }
+      .day-detail {
+        display: flex;
+        flex-wrap: wrap;
+        border-bottom: 1px solid rgba(231, 231, 231, 0.993);
+        padding: 0 20px;
+        .tag-img {
+          min-width: 10%;
+          max-width: 10%;
+          height: 30px;
+        }
+        .tag-text {
+          min-width: 45%;
+          max-width: 45%;
+          text-align: right;
+        }
+        .money-text {
+          min-width: 45%;
+          max-width: 45%;
+          text-align: right;
+        }
+      }
+    }
+  }
+}
+</style>

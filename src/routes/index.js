@@ -2,6 +2,9 @@
 var express = require('express')
 var router = express.Router()
 const md5 = require('blueimp-md5')
+const multer = require('multer')
+// 这里定义图片储存的路径，是以当前文件为基本目录
+const upload = multer({ dest: 'uploads/' })
 var UserModel = require('../db/model').UserModel
 var DetailModel = require('../db/model').DetailModel
 
@@ -129,12 +132,24 @@ router.get('/detail-list', function (req, res, next) {
           }
         })
         console.log(detailList)
-        res.send({data: JSON.stringify([...detailList])})
+        res.json({data: [...detailList]})
       } else {
         res.send({data: 'the list is null'})
       }
     }
   })
+})
+
+/*
+  upload.single('avatar') 接受以avatar命名的文件，也就是input中的name属性的值
+  avatar这个文件的信息可以冲req.file中获取
+*/
+/**
+ * 上传头像
+ */
+router.post('/avatar', upload.single('avatar'), function (req, res) {
+  console.log(req)
+  res.json({ name: req.file })
 })
 
 module.exports = router

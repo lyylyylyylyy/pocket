@@ -10,12 +10,14 @@ import {
   /* eslint-disable no-unused-vars */
   Popup,
   Button,
-  DatePicker
+  DatePicker,
+  Upload
 } from 'cube-ui'
 
 Vue.use(Popup)
 Vue.use(Button)
 Vue.use(DatePicker)
+Vue.use(Upload)
 
 Vue.config.productionTip = false
 Vue.prototype.$http = axios.create({
