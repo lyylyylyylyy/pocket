@@ -155,4 +155,9 @@ router.get('/avatar', function (req, res, next) {
   })
 })
 
+router.post('/logout', function (req, res, next) {
+  console.log('nihao')
+  res.clearCookie('userid')
+  res.send({code: 0})
+})
 module.exports = router

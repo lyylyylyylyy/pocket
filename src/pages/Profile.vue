@@ -1,7 +1,7 @@
 <template>
     <div>
       <div class="avatar" :style="{'background-image': 'url(' + header + ')'}"></div>
-      <div>注销</div>
+      <div @click="logout()">注销</div>
     </div>
 </template>
 <script>
@@ -22,6 +22,35 @@ export default {
       }).catch(error => {
         console.log(error.message)
       })
+    },
+    showBtn () {
+      this.$createDialog({
+        type: 'confirm',
+        title: '确认要退出登录吗？',
+        content: '再考虑一下下好不好？',
+        confirmBtn: {
+          text: '狠心退出',
+          active: true,
+          disabled: false,
+          href: 'javascript:;'
+        },
+        cancelBtn: {
+          text: '再考虑一下',
+          active: false,
+          disabled: false,
+          href: 'javascript:;'
+        },
+        onConfirm: () => {
+          this.$http.post('/logout').then(res => {
+            this.$router.push('/login')
+          })
+        },
+        onCancel: () => {
+        }
+      }).show()
+    },
+    logout () {
+      this.showBtn()
     }
   }
 }

@@ -11,13 +11,15 @@ import {
   Popup,
   Button,
   DatePicker,
-  Upload
+  Upload,
+  Dialog
 } from 'cube-ui'
 
 Vue.use(Popup)
 Vue.use(Button)
 Vue.use(DatePicker)
 Vue.use(Upload)
+Vue.use(Dialog)
 
 Vue.config.productionTip = false
 Vue.prototype.$http = axios.create({
