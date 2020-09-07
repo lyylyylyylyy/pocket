@@ -1,10 +1,8 @@
 // 路由
 var express = require('express')
 var router = express.Router()
-const md5 = require('blueimp-md5')
-const multer = require('multer')
-// 这里定义图片储存的路径，是以当前文件为基本目录
-const upload = multer({ dest: 'uploads/' })
+var md5 = require('blueimp-md5')
+const filter = {password: 0, __v: 0} // 指定过滤的属性
 var UserModel = require('../db/model').UserModel
 var DetailModel = require('../db/model').DetailModel
 
@@ -23,7 +21,7 @@ router.post('/', function (req, res, next) {
 
 router.post('/register', function (req, res, next) {
   // 读取请求参数数据
-  const { username, password, repassword } = req.body
+  const { username, password, repassword, header } = req.body
   console.log(req.body)
 
   // 用户名是否为空
@@ -47,7 +45,7 @@ router.post('/register', function (req, res, next) {
     } else {
       // 未注册保存到数据库中
       // eslint-disable-next-line handle-callback-err
-      new UserModel({ username, password: md5(password) }).save(function (error, user) {
+      new UserModel({ username, password: md5(password), header }).save(function (error, user) {
       // 生成一个cookie （userid: user._id），并且交给浏览器保存
         res.cookie('userid', user._id, { maxAge: 1000 * 60 * 60 * 24 })
         // 返回包含user的json数据
@@ -144,12 +142,17 @@ router.get('/detail-list', function (req, res, next) {
   upload.single('avatar') 接受以avatar命名的文件，也就是input中的name属性的值
   avatar这个文件的信息可以冲req.file中获取
 */
-/**
- * 上传头像
- */
-router.post('/avatar', upload.single('avatar'), function (req, res) {
-  console.log(req)
-  res.json({ name: req.file })
+router.get('/avatar', function (req, res, next) {
+  const user = req.cookies.userid
+  if (!user) {
+    return res.send({code: 1, msg: '请先登陆'})
+  }
+  UserModel.findOne({ _id: user }, filter).then(guest => {
+    console.log(guest)
+    res.send({data: guest.header})
+  }).catch(error => {
+    console.log(error.message)
+  })
 })
 
 module.exports = router

@@ -1,37 +1,41 @@
 <template>
-    <div><cube-upload
-        ref="upload"
-        :action="action"
-        :simultaneous-uploads="1"
-        :process-file="processFile"
-        @file-submitted="fileSubmitted" />
+    <div>
+      <div class="avatar" :style="{'background-image': 'url(' + header + ')'}"></div>
+      <div>注销</div>
     </div>
 </template>
 <script>
-import compress from '../utils/image'
 export default {
   data () {
     return {
-      action: {
-        target: 'http://localhost:3000/avatar',
-        prop: 'base64Value'
-      }
+      header: ''
     }
   },
+  mounted () {
+    this.getHeader()
+  },
   methods: {
-    processFile (file, next) {
-      compress(file, {
-        compress: {
-          width: 1600,
-          height: 1600,
-          quality: 0.5
-        }
-      }, next)
-    },
-    fileSubmitted (file) {
-      file.base64Value = file.file.base64
-      console.log(file.base64Value)
+    getHeader () {
+      this.$http.get('/avatar').then(res => {
+        console.log(res.data)
+        this.header = res.data.data
+      }).catch(error => {
+        console.log(error.message)
+      })
     }
   }
 }
 </script>
+<style lang="scss" scoped>
+.avatar {
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 80px;
+  background-repeat: no-repeat;
+  background-size: 80px 80px;
+  border: 2px solid grey;
+  border-radius: 50%;
+}
+</style>

@@ -8,6 +8,10 @@
       <input type="text" placeholder="用户名" name="user" v-model="username" />
     </div>
     <div>
+      <p>头像：</p>
+      <input type="url" placeholder="头像" name="header" v-model="header" />
+    </div>
+    <div>
       <p>密码：</p>
       <input type="password" placeholder="密码" name="password" v-model="password" />
     </div>
@@ -31,14 +35,16 @@ export default {
       username: '',
       password: '',
       repassword: '',
-      message: ''
+      message: '',
+      header: ''
     }
   },
   methods: {
     async register () {
-      await this.$http.post('/register', qs.stringify({ 'username': this.username, 'password': md5(this.password), 'repassword': md5(this.repassword) })).then(res => {
+      await this.$http.post('/register', qs.stringify({ 'username': this.username, 'password': md5(this.password), 'repassword': md5(this.repassword), 'header': this.header })).then(res => {
         console.log(res)
         this.message = res.data.message
+        this.$router.push({path: './login'})
       }).catch(error => {
         console.log(error.message)
       })
