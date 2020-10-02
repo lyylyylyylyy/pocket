@@ -1,5 +1,6 @@
 <template>
     <div class="ledger-page">
+      <Header></Header>
       <div class="detail-list">
         <div v-for="(item, idx) in detailList" :key="idx" class="day-list">
           <div class="day-bar">
@@ -22,10 +23,11 @@
 </template>
 <script>
 import Pop from '../components/Pop'
+import Header from '../components/Header'
 
 export default {
   name: 'Ledger',
-  components: {Pop},
+  components: {Pop, Header},
   data () {
     return {
       tagPay: [
