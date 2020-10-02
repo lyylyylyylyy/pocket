@@ -215,6 +215,7 @@ export default {
         category: this.type,
         money: this.money,
         remark: this.remark
+        // contentId
       })).then(res => {
         console.log(res)
         this.hide('myPopup')

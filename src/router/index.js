@@ -5,6 +5,7 @@ import Login from '../pages/Login'
 import Account from '../pages/Account'
 import Ledger from '../pages/Ledger'
 import Profile from '../pages/Profile'
+import AddLedger from '../pages/AddLedger'
 
 Vue.use(Router)
 
@@ -38,6 +39,11 @@ export default new Router({
       path: '/profile',
       name: 'Profile',
       component: Profile
+    },
+    {
+      path: '/add-ledger',
+      name: 'AddLedger',
+      component: AddLedger
     }
   ]
 })

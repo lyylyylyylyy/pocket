@@ -38,13 +38,26 @@ const UserModel = mongoose.model('user', userSchema)
 
 exports.UserModel = UserModel
 
+// 账本数据库
+// const pocketModel = mongoose.Schema({
+//   tag: {type: String, required: true}
+// })
+
+// const PocketModel = mongoose.model('pocket', pocketModel)
+
+// exports.PocketModel = PocketModel
+
 const detailSchema = mongoose.Schema({
   time: {type: String, required: true},
   tag: {type: String, required: true},
   category: {type: String, required: true},
   money: {type: String, required: true},
   remark: {type: String, required: true},
-  userId: {type: String, required: true}
+  userId: {type: String, required: true},
+  content_id: {
+    type: mongoose.Schema.Types.ObjectId,
+    $ref: 'detail'
+  }
 })
 
 const DetailModel = mongoose.model('detail', detailSchema)

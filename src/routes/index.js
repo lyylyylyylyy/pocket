@@ -78,12 +78,12 @@ router.post('/login', function (req, res, next) {
  * 添加记录明细
  */
 router.post('/detail', function (req, res, next) {
-  const {time, tag, category, money, remark} = req.body
+  const {time, tag, category, money, remark, contentId} = req.body
   const userId = req.cookies.userid
   if (!userId) {
     return res.send({code: 1, msg: '请先登陆'})
   }
-  const newDetail = {time, tag, category, money, remark, userId}
+  const newDetail = {time, tag, category, money, remark, userId, contentId}
   DetailModel.create(newDetail).then(res => {
     res.send(res)
   }).catch(error => {
@@ -114,7 +114,8 @@ router.get('/detail-list', function (req, res, next) {
             tag: element.tag,
             category: element.category,
             money: element.money,
-            remark: element.remark
+            remark: element.remark,
+            content_id: element.content_id
           }
           // console.log(detailtag)
           if (!detailList.has(date)) {
