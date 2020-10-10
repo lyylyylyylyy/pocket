@@ -8,9 +8,12 @@
             <input v-model="tag" placeholder="请输入账本标签"/>
             <input v-model="name" placeholder="请输入账本名称"/>
         </div>
+        <div class="button" @click="submit">添加账本</div>
     </div>
 </template>
 <script>
+const qs = require('qs')
+
 export default {
   name: 'AddLedger',
   data () {
@@ -22,6 +25,16 @@ export default {
   methods: {
     back () {
       this.$router.go(-1)
+    },
+    submit () {
+      this.$http.post('/newledger', qs.stringify(
+        {
+          tag: this.tag,
+          name: this.name
+        }
+      )).then(res => {
+        console.log(res)
+      })
     }
   }
 }
@@ -29,7 +42,6 @@ export default {
 <style lang="scss" scoped>
 .header {
     display: flex;
-    justify-content: center;
     align-items: center;
     margin: 10px;
     .back {
@@ -41,6 +53,7 @@ export default {
     }
     .text {
         flex: 1;
+        margin-left: -30px;
     }
 }
 </style>

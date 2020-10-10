@@ -5,6 +5,7 @@ var md5 = require('blueimp-md5')
 const filter = {password: 0, __v: 0} // 指定过滤的属性
 var UserModel = require('../db/model').UserModel
 var DetailModel = require('../db/model').DetailModel
+var PocketModel = require('../db/model').PocketModel
 
 // 主页
 router.post('/', function (req, res, next) {
@@ -85,7 +86,7 @@ router.post('/detail', function (req, res, next) {
   }
   const newDetail = {time, tag, category, money, remark, userId, contentId}
   DetailModel.create(newDetail).then(res => {
-    res.send(res)
+    res.send({data: res.data})
   }).catch(error => {
     res.send(error.message)
   })
@@ -156,6 +157,24 @@ router.get('/avatar', function (req, res, next) {
   })
 })
 
+/**
+ * 添加新账本
+ */
+
+router.post('/newledger', function (req, res, next) {
+  const { tag, name } = req.body
+  const userId = req.cookies.userid
+  if (!userId) {
+    return res.send({code: 1, msg: '请先登陆'})
+  }
+  const newPocket = {tag, name, userId}
+  PocketModel.create(newPocket)
+  res.send(newPocket)
+})
+
+/**
+ * 退出登录
+ */
 router.post('/logout', function (req, res, next) {
   console.log('nihao')
   res.clearCookie('userid')

@@ -39,13 +39,15 @@ const UserModel = mongoose.model('user', userSchema)
 exports.UserModel = UserModel
 
 // 账本数据库
-// const pocketModel = mongoose.Schema({
-//   tag: {type: String, required: true}
-// })
+const pocketSchema = mongoose.Schema({
+  tag: {type: String, required: true},
+  name: {type: String, required: true},
+  userId: {type: String, required: true}
+})
 
-// const PocketModel = mongoose.model('pocket', pocketModel)
+const PocketModel = mongoose.model('selfpocket', pocketSchema)
 
-// exports.PocketModel = PocketModel
+exports.PocketModel = PocketModel
 
 const detailSchema = mongoose.Schema({
   time: {type: String, required: true},
