@@ -53,7 +53,6 @@ export default {
     }
     .text {
         flex: 1;
-        margin-left: -30px;
     }
 }
 </style>

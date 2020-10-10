@@ -2,24 +2,42 @@
     <div class="header">
         <div>
             <div class="list">
-                <div class="desc" @click="addLedger">我的账本</div>
+                <div class="desc" @click="addLedger">
+                  <div>{{name}}</div>
+                </div>
                 <div class="symbol"></div>
             </div>
         </div>
         <div></div>
         <div></div>
-        <Select ref="Select"></Select>
     </div>
 </template>
 <script>
-import Select from '../components/Select'
 
 export default {
-  name: 'header',
-  components: {Select},
+  name: 'Header',
+  data () {
+    return {
+      pocketlist: [],
+      name: ''
+    }
+  },
+  mounted () {
+    this.$http.get('/pocketlist').then(res => {
+      console.log(res.data.data)
+      this.pocketlist = res.data.data
+      if (this.pocketlist.length) {
+        this.name = this.pocketlist[0].name
+      } else {
+        this.name = '我的账本'
+      }
+    }).catch(error => {
+      console.log(error.message)
+    })
+  },
   methods: {
     addLedger () {
-      this.$refs.Select.showPopup('selectPopup')
+      this.$router.push('./select')
     }
   }
 }

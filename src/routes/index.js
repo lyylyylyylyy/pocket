@@ -160,7 +160,6 @@ router.get('/avatar', function (req, res, next) {
 /**
  * 添加新账本
  */
-
 router.post('/newledger', function (req, res, next) {
   const { tag, name } = req.body
   const userId = req.cookies.userid
@@ -170,6 +169,23 @@ router.post('/newledger', function (req, res, next) {
   const newPocket = {tag, name, userId}
   PocketModel.create(newPocket)
   res.send(newPocket)
+})
+
+/**
+ * 获取账本列表
+ */
+router.get('/pocketlist', function (req, res, next) {
+  const user = req.cookies.userid
+  if (!user) {
+    return res.send({code: 1, msg: '请先登陆'})
+  }
+  PocketModel.find({ userId: user }, function (error, pocketlist) {
+    if (error) {
+      res.send(error.message)
+    } else {
+      res.send({data: pocketlist})
+    }
+  })
 })
 
 /**
