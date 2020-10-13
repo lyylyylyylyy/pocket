@@ -42,6 +42,9 @@ export default {
   props: {
     category: {
       type: String
+    },
+    id: {
+      type: String
     }
   },
   data () {
@@ -161,6 +164,9 @@ export default {
   watch: {
     category (val) {
       this.type = val
+    },
+    id (val) {
+      this.id = val
     }
   },
   mounted () {
@@ -214,8 +220,8 @@ export default {
         tag: this.tag,
         category: this.type,
         money: this.money,
-        remark: this.remark
-        // contentId
+        remark: this.remark,
+        contentId: this.id
       })).then(res => {
         console.log(res)
         this.hide('myPopup')

@@ -18,7 +18,7 @@
           <button @click="addPay()">添加支出</button>
           <button @click="addIncome()">添加收入</button>
       </div>
-      <pop :category="category" ref="Pop"></pop>
+      <pop :category="category" :id="id" ref="Pop"></pop>
     </div>
 </template>
 <script>

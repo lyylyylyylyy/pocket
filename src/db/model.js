@@ -59,7 +59,7 @@ const detailSchema = mongoose.Schema({
   userId: {type: String, required: true},
   content_id: {
     type: mongoose.Schema.Types.ObjectId,
-    $ref: 'detail'
+    $ref: 'selfpocket'
   }
 })
 
