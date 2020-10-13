@@ -161,12 +161,12 @@ router.get('/avatar', function (req, res, next) {
  * 添加新账本
  */
 router.post('/newledger', function (req, res, next) {
-  const { tag, name } = req.body
+  const { tag, name, index } = req.body
   const userId = req.cookies.userid
   if (!userId) {
     return res.send({code: 1, msg: '请先登陆'})
   }
-  const newPocket = {tag, name, userId}
+  const newPocket = {tag, name, index, userId}
   PocketModel.create(newPocket)
   res.send(newPocket)
 })

@@ -19,7 +19,8 @@ export default {
   data () {
     return {
       pocketlist: [],
-      name: ''
+      name: '',
+      identify: ''
     }
   },
   mounted () {
@@ -27,9 +28,17 @@ export default {
       console.log(res.data.data)
       this.pocketlist = res.data.data
       if (this.pocketlist.length) {
-        this.name = this.pocketlist[0].name
+        this.identify = this.$route.query.id ? this.$route.query.id : this.pocketlist[0]._id
+        this.pocketlist.map(pocket => {
+          if (pocket._id === this.identify) {
+            this.name = pocket.name
+          }
+        })
+        this.$emit('identify', this.identify)
+        // console.log(this.identify)
       } else {
         this.name = '我的账本'
+        this.identify = '0'
       }
     }).catch(error => {
       console.log(error.message)

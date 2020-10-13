@@ -1,6 +1,6 @@
 <template>
     <div class="ledger-page">
-      <Header></Header>
+      <Header @identify="receive"></Header>
       <div class="detail-list">
         <div v-for="(item, idx) in detailList" :key="idx" class="day-list">
           <div class="day-bar">
@@ -159,11 +159,15 @@ export default {
       category: '',
       detailList: [],
       moneyList: [],
-      updated: false
+      updated: false,
+      id: ''
     }
   },
   async created () {
     this.getDetail()
+  },
+  mounted () {
+    this.receive()
   },
   // watch: {
   //   detailList (detailList) {
@@ -171,6 +175,9 @@ export default {
   //   }
   // },
   methods: {
+    receive (identify) {
+      this.id = identify
+    },
     addPay () {
       this.category = '1'
       console.log(this.category)

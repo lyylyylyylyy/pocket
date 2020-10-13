@@ -5,7 +5,7 @@
             <div class="text">新建账本</div>
         </div>
         <div class="tag-list">
-          <div class="tag" v-for="tag in tagList" :key="tag.id" @click="selectTag(tag.desc)">
+          <div class="tag" v-for="tag in tagList" :key="tag.id" @click="selectTag(tag.desc, tag.id)">
             <img :src="tag.path" class="tag-img"/>
             <div class="tag-text">{{tag.desc}}</div>
           </div>
@@ -25,6 +25,7 @@ export default {
     return {
       tag: '',
       name: '',
+      index: 0,
       tagList: [
         {
           id: 0,
@@ -76,20 +77,23 @@ export default {
   },
   methods: {
     back () {
-      this.$router.go(-1)
+      this.$router.push('./select')
     },
-    selectTag (tag) {
+    selectTag (tag, id) {
       this.tag = tag
+      this.index = id
     },
     submit () {
       if (this.name && this.tag) {
         this.$http.post('/newledger', qs.stringify(
           {
             tag: this.tag,
-            name: this.name
+            name: this.name,
+            index: this.index
           }
         )).then(res => {
           console.log(res)
+          this.$router.push('./select')
         })
       }
     }

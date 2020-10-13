@@ -42,6 +42,7 @@ exports.UserModel = UserModel
 const pocketSchema = mongoose.Schema({
   tag: {type: String, required: true},
   name: {type: String, required: true},
+  index: {type: String, required: true},
   userId: {type: String, required: true}
 })
 
