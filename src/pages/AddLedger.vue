@@ -4,11 +4,16 @@
             <div class="back" @click="back"></div>
             <div class="text">新建账本</div>
         </div>
-        <div class="content">
-            <input v-model="tag" placeholder="请输入账本标签"/>
-            <input v-model="name" placeholder="请输入账本名称"/>
+        <div class="tag-list">
+          <div class="tag" v-for="tag in tagList" :key="tag.id" @click="selectTag(tag.desc)">
+            <img :src="tag.path" class="tag-img"/>
+            <div class="tag-text">{{tag.desc}}</div>
+          </div>
         </div>
-        <div class="button" @click="submit">添加账本</div>
+        <div class="content">
+            <input v-model="name" placeholder="请输入账本名称" />
+        </div>
+        <button class="button" @click="submit">确定</button>
     </div>
 </template>
 <script>
@@ -19,22 +24,74 @@ export default {
   data () {
     return {
       tag: '',
-      name: ''
+      name: '',
+      tagList: [
+        {
+          id: 0,
+          desc: '日常',
+          path: require('../assets/book1.png')
+        },
+        {
+          id: 1,
+          desc: '生意',
+          path: require('../assets/book2.png')
+        },
+        {
+          id: 2,
+          desc: '家庭',
+          path: require('../assets/book3.png')
+        },
+        {
+          id: 3,
+          desc: '旅行',
+          path: require('../assets/book4.png')
+        },
+        {
+          id: 4,
+          desc: '装修',
+          path: require('../assets/book5.png')
+        },
+        {
+          id: 5,
+          desc: '结婚',
+          path: require('../assets/book6.png')
+        },
+        {
+          id: 6,
+          desc: '校园',
+          path: require('../assets/book7.png')
+        },
+        {
+          id: 7,
+          desc: '班费',
+          path: require('../assets/book8.png')
+        },
+        {
+          id: 8,
+          desc: '人情',
+          path: require('../assets/book9.png')
+        }
+      ]
     }
   },
   methods: {
     back () {
       this.$router.go(-1)
     },
+    selectTag (tag) {
+      this.tag = tag
+    },
     submit () {
-      this.$http.post('/newledger', qs.stringify(
-        {
-          tag: this.tag,
-          name: this.name
-        }
-      )).then(res => {
-        console.log(res)
-      })
+      if (this.name && this.tag) {
+        this.$http.post('/newledger', qs.stringify(
+          {
+            tag: this.tag,
+            name: this.name
+          }
+        )).then(res => {
+          console.log(res)
+        })
+      }
     }
   }
 }
@@ -54,5 +111,27 @@ export default {
     .text {
         flex: 1;
     }
+}
+.tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin: 20px 10px;
+  .tag {
+    margin-bottom: 15px;
+    .tag-img {
+      width: 80px;
+      height: 80px;
+      margin-bottom: 5px;
+    }
+  }
+}
+.tag-list:last-child {
+  margin-right: 100px;
+}
+</style>
+<style lang="scss">
+.cube-drawer {
+  background: white;
 }
 </style>
