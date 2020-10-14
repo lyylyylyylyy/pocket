@@ -1,11 +1,10 @@
 <template>
     <div>
+        <div>微信账户</div>
+        <div>银行账户</div>
     </div>
 </template>
 <script>
-// import Router from 'vue-router'
-// Vue.use(VueRouter)
-
 export default {
 }
 </script>
