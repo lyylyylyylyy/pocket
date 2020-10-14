@@ -223,9 +223,9 @@ export default {
         remark: this.remark,
         contentId: this.id
       })).then(res => {
-        console.log(res)
+        console.log(res, 999)
         this.hide('myPopup')
-        location.reload()
+        // location.reload()
       }).catch(error => {
         console.log(error.message)
       })

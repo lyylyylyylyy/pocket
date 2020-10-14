@@ -57,10 +57,7 @@ const detailSchema = mongoose.Schema({
   money: {type: String, required: true},
   remark: {type: String, required: true},
   userId: {type: String, required: true},
-  content_id: {
-    type: mongoose.Schema.Types.ObjectId,
-    $ref: 'selfpocket'
-  }
+  contentId: {type: String, required: true}
 })
 
 const DetailModel = mongoose.model('detail', detailSchema)

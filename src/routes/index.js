@@ -80,12 +80,14 @@ router.post('/login', function (req, res, next) {
  */
 router.post('/detail', function (req, res, next) {
   const {time, tag, category, money, remark, contentId} = req.body
+  console.log(req.body)
   const userId = req.cookies.userid
   if (!userId) {
     return res.send({code: 1, msg: '请先登陆'})
   }
   const newDetail = {time, tag, category, money, remark, userId, contentId}
   DetailModel.create(newDetail).then(res => {
+    console.log(res.data)
     res.send({data: res.data})
   }).catch(error => {
     res.send(error.message)
