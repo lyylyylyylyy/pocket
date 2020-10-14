@@ -24,6 +24,7 @@
 <script>
 import Pop from '../components/Pop'
 import Header from '../components/Header'
+const qs = require('qs')
 
 export default {
   name: 'Ledger',
@@ -163,10 +164,7 @@ export default {
       id: ''
     }
   },
-  async created () {
-    this.getDetail()
-  },
-  mounted () {
+  async mounted () {
     this.receive()
   },
   // watch: {
@@ -177,6 +175,8 @@ export default {
   methods: {
     receive (identify) {
       this.id = identify
+      console.log(this.id)
+      this.getDetail()
     },
     addPay () {
       this.category = '1'
@@ -189,9 +189,11 @@ export default {
       this.$refs.Pop.showPopup('myPopup')
     },
     async getDetail () {
-      await this.$http.get('/detail-list').then(res => {
+      await this.$http.post('/detail-list', qs.stringify({
+        contentId: this.id
+      })).then(res => {
         this.detailList = res.data.data
-        // console.log(this.detailList)
+        console.log(this.detailList)
         const list = this.detailList
         for (let i = 0; i < list.length; i++) {
           var record = []

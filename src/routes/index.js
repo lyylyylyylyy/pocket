@@ -97,7 +97,8 @@ router.post('/detail', function (req, res, next) {
 /**
  * 获取明细列表
  */
-router.get('/detail-list', function (req, res, next) {
+router.post('/detail-list', function (req, res, next) {
+  const { contentId } = req.body
   const user = req.cookies.userid
   if (!user) {
     return res.send({code: 1, msg: '请先登陆'})
@@ -118,22 +119,37 @@ router.get('/detail-list', function (req, res, next) {
             category: element.category,
             money: element.money,
             remark: element.remark,
-            content_id: element.content_id
+            content_id: element.contentId
           }
           // console.log(detailtag)
           if (!detailList.has(date)) {
             const arr = []
-            arr.push(detailtag)
-            detailList.set(date, arr)
+            if (detailtag.content_id === contentId) {
+              arr.push(detailtag)
+              detailList.set(date, arr)
+            }
             // console.log(detailList)
           } else {
             const record = detailList.get(date)
-            record.push(detailtag)
-            detailList.set(date, record)
-            // console.log(detailList)
+            if (detailtag.content_id === contentId) {
+              record.push(detailtag)
+              detailList.set(date, record)
+              // console.log(detailList)
+            }
           }
         })
         console.log(detailList)
+        // detailList.forEach(element => {
+        //   for (var i = 0; i < element.length; i++) {
+        //     if (element[i].content_id === contentId) {
+
+        //     }
+        //   }
+        //   // if (element.content_id === contentId) {
+        //   //   pocketDetail.push(element)
+        //   // }
+        // })
+        // // console.log(pocketDetail)
         res.json({data: [...detailList]})
       } else {
         res.send({data: 'the list is null'})
