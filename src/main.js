@@ -26,7 +26,7 @@ Vue.use(Drawer)
 Vue.config.productionTip = false
 Vue.prototype.$http = axios.create({
   // baseURL: process.env.VUE_APP_API_URL || '/web/api'
-  baseURL: 'http://localhost:3000',
+  baseURL: 'http://47.93.137.97:3000/',
   timeout: 30000,
   withCredentials: true
 })
